@@ -3970,17 +3970,25 @@ sessionInfo()
 
 
 
-# 13. Save the trained xgb model and training dataset locally####
+# 13. Save the trained xgb model and datasets locally ####
 
-# Save the trained xgb model and training dataset locally
-cat("\n===== Saving xgb model as PCDscore and training dataset as TCGA-CRC-Trainset =====\n")
+cat("\n===== Saving xgb model and datasets locally =====\n")
 setwd(BASE_DIR)
-getwd()
-# Save the trained xgb model to a local file named PCDscore.model
+
+# Save the trained xgboost model using xgb.save (xgboost-specific format)
 xgb.save(model_xgb, "PCDscore.model")
 cat("Model saved successfully as PCDscore.model\n")
 
-# Save the training dataset for future standardization purposes
-saveRDS(train_exp, "TCGA-CRC-Trainset.rds")
-cat("Training dataset saved successfully as TCGA-CRC-Trainset.rds\n")
+# Save TCGA training and test expression matrices and clinical data
+saveRDS(train_exp, "TCGA_CRC_train_exp.rds")
+saveRDS(train_cli, "TCGA_CRC_train_cli.rds")
+saveRDS(test_exp, "TCGA_CRC_test_exp.rds")
+saveRDS(test_cli, "TCGA_CRC_test_cli.rds")
+cat("TCGA training/test expression and clinical data saved as .rds files\n")
+
+# Save external GEO validation datasets
+saveRDS(GSE17536_CRC_test_dataset, "GSE17536_CRC_test_dataset.rds")
+saveRDS(GSE17537_CRC_test_dataset, "GSE17537_CRC_test_dataset.rds")
+saveRDS(GSE29621_CRC_test_dataset, "GSE29621_CRC_test_dataset.rds")
+cat("External validation datasets (GSE17536, GSE17537, GSE29621) saved as .rds files\n")
 
